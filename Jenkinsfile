@@ -14,7 +14,7 @@ pipeline{
     stage("Build Image Docker"){
       steps {
         script {
-                    sh 'cd /root/JkDock && docker build -t myimage_nginx .'
+                    sh 'docker build -t myimage_nginx .'
                     sh 'docker tag myimage_nginx alyssa:myimage_nginx'
                 }
       }
