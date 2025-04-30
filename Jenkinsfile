@@ -1,5 +1,8 @@
 pipeline{
   agent any
+  environment{
+    IMG_NAME = 'myimage_nginx'
+  }
   stages {
     stage("Supprimer le workspace"){
       steps {
@@ -14,7 +17,7 @@ pipeline{
     stage("Build Image Docker"){
       steps {
         script {
-                    sh 'docker build -t myimage_nginx .'
+                    sh 'docker build -t ${IMG_NAME} .'
                     sh 'docker tag myimage_nginx alyssa:myimage_nginx'
                 }
       }
