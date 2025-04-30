@@ -8,7 +8,7 @@ pipeline{
     }
     stage("Checkout SCM"){
       steps {
-        sh 'git clone https://github.com/Lylyss97x/Jenkins_Docker_Projet.git'
+        sh 'git clone https://github.com/Lylyss97x/Jenkins_Docker_Project.git'
       }
     }
   }
