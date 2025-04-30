@@ -18,6 +18,7 @@ pipeline{
       steps {
         script {
                     sh 'cd Jenkins_Docker_Project/'
+                    sh ' pwd && l'
                     sh 'docker build -t ${IMG_NAME} .'
                     sh 'docker tag myimage_nginx alyssa:myimage_nginx'
                 }
