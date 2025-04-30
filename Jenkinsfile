@@ -14,7 +14,7 @@ pipeline{
     stage("Build Image Docker"){
       steps {
         script {
-                    sh 'docker build -t myimage_nginx .'
+                    sh 'sudo cd /root/JkDock && docker build -t myimage_nginx .'
                     sh 'docker tag myimage_nginx alyssa:myimage_nginx'
                 }
       }
@@ -23,8 +23,7 @@ pipeline{
     stage("Deploy Container"){
       steps {
         script {
-                    sh 'docker rm image mynginx .'
-                    sh 'docker rm -f $(docker ps -aq)'
+                    sh 'docker rm -f $(docker ps -aq) || true'
                     sh 'docker run -d --name myapp --hostname myapp -p 8099:80 myimage_nginx'
                 }
       }
