@@ -17,8 +17,8 @@ pipeline{
     stage("Build Image Docker"){
       steps {
         script {
-                    sh 'cd Jenkins_Docker_Project/'
-                    sh ' pwd && l'
+                    sh 'cd /var/lib/jenkins/workspace/pipeline-SCM-image-docker-container/Jenkins_Docker_Project/'
+                    sh ' pwd && ls'
                     sh 'docker build -t ${IMG_NAME} .'
                     sh 'docker tag myimage_nginx alyssa:myimage_nginx'
                 }
