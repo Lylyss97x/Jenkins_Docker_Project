@@ -2,7 +2,7 @@ pipeline{
   agent any
   environment{
     IMG_NAME = 'myimage_nginx'
-    DOCKER_REPO = 'JKDK'
+    DOCKER_REPO = 'jkdk'
   }
   
   stages{
