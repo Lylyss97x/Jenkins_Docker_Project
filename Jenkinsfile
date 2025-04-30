@@ -2,36 +2,43 @@ pipeline{
   agent any
   environment{
     IMG_NAME = 'myimage_nginx'
+    DOCKER_REPO = 'JKDK'
   }
-  stages {
-    stage("Supprimer le workspace"){
-      steps {
+  
+  stages{
+    stage('clean up'){
+      steps{
         deleteDir()
       }
     }
-    stage("Checkout SCM"){
-      steps {
-        sh 'git clone https://github.com/Lylyss97x/Jenkins_Docker_Project.git'
+
+    stage('Checkout SCM'){
+      steps{
+        git (
+          branch: 'main',
+          url: 'https://github.com/Lylyss97x/Jenkins_Docker_Project.git'
+        )
       }
     }
-    stage("Build Image Docker"){
-      steps {
+    stage('Build'){
+      steps{
         script {
-                    sh 'cd /var/lib/jenkins/workspace/pipeline-SCM-image-docker-container/Jenkins_Docker_Project/'
-                    sh ' pwd && ls'
-                    sh 'docker build -t ${IMG_NAME} .'
-                    sh 'docker tag myimage_nginx alyssa:myimage_nginx'
-                }
+          sh "docker build -t ${IMG_NAME} ."
+          sh "docker tag ${IMG_NAME} ${DOCKER_REPO}:${IMG_NAME}"
+        }
       }
     }
 
-    stage("Deploy Container"){
-      steps {
+    stage('deploiement conteneur'){
+      steps{
         script {
-                    sh 'docker rm -f $(docker ps -aq) || true'
-                    sh 'docker run -d --name myapp --hostname myapp -p 8099:80 myimage_nginx'
-                }
+          sh "docker stop monapp || true"
+          sh "docker rm monapp || true"
+          sh "docker run -d --name monapp --hostname monapp -p 8081:81 ${IMG_NAME}"
+          sh "docker exec monapp ifconfig"        
+        }
       }
     }
+
   }
 }
